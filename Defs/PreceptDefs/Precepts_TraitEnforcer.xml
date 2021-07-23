@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <IssueDef>
+    <defName>TraitEnforcer</defName>
+    <label>Trait Enforcer</label>
+    <allowMultiplePrecepts>false</allowMultiplePrecepts>
+    <iconPath>UI/Issues/IdeoDiversity</iconPath>
+  </IssueDef>
+
+  <PreceptDef>
+    <defName>TraitEnforcer_Asexual</defName>
+    <issue>TraitEnforcer</issue>
+    <label>Asexual</label>
+    <description>Force asexual trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <comps>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef>
+    <defName>TraitEnforcer_Bisexual</defName>
+    <issue>TraitEnforcer</issue>
+    <label>Bisexual</label>
+    <description>Force bisexual trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <comps>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef>
+    <defName>TraitEnforcer_Gay</defName>
+    <issue>TraitEnforcer</issue>
+    <label>Gay</label>
+    <description>Force gay trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <comps>
+    </comps>
+  </PreceptDef>
+</Defs>
