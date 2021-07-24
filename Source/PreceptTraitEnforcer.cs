@@ -46,13 +46,41 @@ namespace PreceptTraitEnforcer
             }
             else if(ideo.HasPrecept(PTEPreceptDefOf.TraitEnforcer_Gay))
             {
-                if((ideo.HasMeme(MemeDefOf.MaleSupremacy) && pawn.gender != Gender.Male) || (ideo.HasMeme(MemeDefOf.FemaleSupremacy) && pawn.gender != Gender.Female))
-                {
-                    return;
-                }
-
                 TraitResetLoveInterest(pawn, TraitDefOf.Gay);
             }
+            else if(ideo.HasPrecept(PTEPreceptDefOf.TraitEnforcer_Straight))
+            {
+                TraitResetLoveInterest(pawn, null);
+            }
+            else if(ideo.HasPrecept(PTEPreceptDefOf.TraitEnforcer_Cannibal))
+            {
+                TraitResetWithConflicts(pawn, TraitDefOf.Cannibal);
+            }
+            else if(ideo.HasPrecept(PTEPreceptDefOf.TraitEnforcer_Nudist))
+            {
+                TraitResetWithConflicts(pawn, TraitDefOf.Nudist);
+            }
+            else if(ideo.HasPrecept(PTEPreceptDefOf.TraitEnforcer_Pyromaniac))
+            {
+                TraitResetWithConflicts(pawn, TraitDefOf.Pyromaniac);
+            }
+            else if(ideo.HasPrecept(PTEPreceptDefOf.TraitEnforcer_Undergrounder))
+            {
+                TraitResetWithConflicts(pawn, TraitDefOf.Undergrounder);
+            }
+            else if(ideo.HasPrecept(PTEPreceptDefOf.TraitEnforcer_ChemicalFascination))
+            {
+                TraitResetDegree(pawn, TraitDefOf.DrugDesire, 2);
+            }
+            else if(ideo.HasPrecept(PTEPreceptDefOf.TraitEnforcer_ChemicalInterest))
+            {
+                TraitResetDegree(pawn, TraitDefOf.DrugDesire, 1);
+            }
+            else if(ideo.HasPrecept(PTEPreceptDefOf.TraitEnforcer_Teetotaler))
+            {
+                TraitResetDegree(pawn, TraitDefOf.DrugDesire, -1);
+            }
+
         }
 
         private static Pawn GetPawn(this Pawn_IdeoTracker _this)
@@ -76,7 +104,7 @@ namespace PreceptTraitEnforcer
         private static void TraitResetLoveInterest(Pawn pawn, TraitDef trait)
         {
             // Disallow overriding asexual
-            if (pawn.story.traits.HasTrait(trait) || pawn.story.traits.HasTrait(TraitDefOf.Asexual))
+            if (pawn.story.traits.HasTrait(TraitDefOf.Asexual) || (trait != null && pawn.story.traits.HasTrait(trait)))
             {
                 return;
             }
@@ -93,9 +121,12 @@ namespace PreceptTraitEnforcer
                 }
             }
 
-            pawn.story.traits.GainTrait(new Trait(trait));
+            if(trait != null) {
+                pawn.story.traits.GainTrait(new Trait(trait));
+            }
 
-            if(trait == TraitDefOf.Asexual || trait == TraitDefOf.Gay)
+            /*
+            if(trait == null || trait == TraitDefOf.Asexual || trait == TraitDefOf.Gay)
             {
                 List<DirectPawnRelation> removeRelations = new List<DirectPawnRelation>();
 
@@ -114,7 +145,34 @@ namespace PreceptTraitEnforcer
                 {
                     pawn.relations.RemoveDirectRelation(relation);
                 }
+            }*/
+        }
+
+        private static void TraitResetWithConflicts(Pawn pawn, TraitDef trait)
+        {
+            if (pawn.story.traits.HasTrait(trait))
+            {
+                return;
             }
+
+            pawn.story.traits.GainTrait(new Trait(trait));
+        }
+
+        private static void TraitResetDegree(Pawn pawn, TraitDef trait, int degree)
+        {
+            if (pawn.story.traits.HasTrait(TraitDefOf.DrugDesire))
+            {
+                for (int i = 0; i < pawn.story.traits.allTraits.Count; i++)
+                {
+                    if (pawn.story.traits.allTraits[i].def == TraitDefOf.DrugDesire)
+                    {
+                        pawn.story.traits.RemoveTrait(pawn.story.traits.allTraits[i]);
+                        break;
+                    }
+                }
+            }
+
+            pawn.story.traits.GainTrait(new Trait(trait, degree));
         }
     }
 
@@ -123,6 +181,14 @@ namespace PreceptTraitEnforcer
     {
         public static PreceptDef TraitEnforcer_Asexual;
         public static PreceptDef TraitEnforcer_Bisexual;
+        public static PreceptDef TraitEnforcer_Cannibal;
+        public static PreceptDef TraitEnforcer_ChemicalFascination;
+        public static PreceptDef TraitEnforcer_ChemicalInterest;
         public static PreceptDef TraitEnforcer_Gay;
+        public static PreceptDef TraitEnforcer_Nudist;
+        public static PreceptDef TraitEnforcer_Pyromaniac;
+        public static PreceptDef TraitEnforcer_Straight;
+        public static PreceptDef TraitEnforcer_Teetotaler;
+        public static PreceptDef TraitEnforcer_Undergrounder;
     }
 }
