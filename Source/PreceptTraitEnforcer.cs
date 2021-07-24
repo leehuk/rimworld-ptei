@@ -36,6 +36,11 @@ namespace PreceptTraitEnforcer
 
             Pawn pawn = __instance.GetPawn();
 
+            if (!TraitCheckGender(pawn, ideo))
+            {
+                return;
+            }
+
             if(ideo.HasPrecept(PTEPreceptDefOf.TraitEnforcer_Asexual))
             {
                 TraitResetLoveInterest(pawn, TraitDefOf.Asexual);
@@ -99,6 +104,26 @@ namespace PreceptTraitEnforcer
             }
 
             return (Pawn)_pawn?.GetValue(_this);
+        }
+
+        private static bool TraitCheckGender(Pawn pawn, Ideo ideo)
+        {
+            if(PTESettings.GenderSetting == "All" || (PTESettings.GenderSetting == "Female" && pawn.gender == Gender.Female) || (PTESettings.GenderSetting == "Male" && pawn.gender == Gender.Male))
+            {
+                return true;
+            }
+
+            if(PTESettings.GenderSetting == "Meme")
+            {
+                if((ideo.HasMeme(MemeDefOf.MaleSupremacy) && pawn.gender != Gender.Male) || (ideo.HasMeme(MemeDefOf.FemaleSupremacy) && pawn.gender != Gender.Female))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            return false;
         }
 
         private static void TraitResetLoveInterest(Pawn pawn, TraitDef trait)
