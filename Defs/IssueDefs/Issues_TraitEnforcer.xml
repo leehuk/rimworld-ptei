@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <IssueDef>
+    <defName>TraitEnforcerFemale</defName>
+    <label>Trait Enforcer Female</label>
+    <allowMultiplePrecepts>false</allowMultiplePrecepts>
+    <iconPath>UI/Issues/IdeoDiversity</iconPath>
+  </IssueDef>
+  <IssueDef>
+    <defName>TraitEnforcerMale</defName>
+    <label>Trait Enforcer Male</label>
+    <allowMultiplePrecepts>false</allowMultiplePrecepts>
+    <iconPath>UI/Issues/IdeoDiversity</iconPath>
+  </IssueDef>
+</Defs>

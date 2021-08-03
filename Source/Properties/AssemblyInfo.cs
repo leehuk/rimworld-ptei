@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PreceptTraitEnforcer")]
+[assembly: AssemblyTitle("PreceptTraitEnforcerImproved")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PreceptTraitEnforcer")]
+[assembly: AssemblyProduct("PreceptTraitEnforcerImproved")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f3e1a6f6-9002-4ade-a2fd-3f64bd6b378f")]
+[assembly: Guid("60eda0d8-eefc-11eb-9a03-0242ac130003")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-    <name>Precept Trait Enforcer</name>
+    <name>Precept Trait Enforcer Improved</name>
     <author>leeh</author>
     <url></url>
     <supportedVersions>
@@ -9,5 +9,5 @@
 <description>
 Precept Trait Enforcer
 </description>
-<packageId>precepttraitenforcer.leeh</packageId>
+<packageId>ptei.leeh</packageId>
 </ModMetaData>

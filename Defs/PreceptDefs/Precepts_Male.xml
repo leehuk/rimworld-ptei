@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Male_Asexual</defName>
+    <issue>TraitEnforcerMale</issue>
+    <label>Asexual</label>
+    <description>Enforce asexual trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Male</gender>
+    <comps>
+      <li Class="PTEI.PTEIPreceptComp_Standard">
+        <trait>Asexual</trait>
+        <removeTraits>
+            <li>Bisexual</li>
+            <li>Gay</li>
+        </removeTraits>
+      </li>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Male_Bisexual</defName>
+    <issue>TraitEnforcerMale</issue>
+    <label>Bisexual</label>
+    <description>Enforce bisexual trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Male</gender>
+    <comps>
+      <li Class="PTEI.PTEIPreceptComp_Standard">
+        <trait>Bisexual</trait>
+        <conflictingTraits>
+            <li>Asexual</li>
+        </conflictingTraits>
+        <removeTraits>
+            <li>Gay</li>
+        </removeTraits>
+      </li>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Male_Bloodlust</defName>
+    <issue>TraitEnforcerMale</issue>
+    <label>Bloodlust</label>
+    <description>Enforce bloodlust trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Male</gender>
+    <comps>
+      <li Class="PTEI.PTEIPreceptComp_Standard">
+        <trait>Bloodlust</trait>
+      </li>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Male_Brawler</defName>
+    <issue>TraitEnforcerMale</issue>
+    <label>Brawler</label>
+    <description>Enforce brawler trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Male</gender>
+    <comps>
+      <li Class="PTEI.PTEIPreceptComp_Standard">
+        <trait>Brawler</trait>
+        <removeTraits>
+          <li>ShootingAccuracy</li>
+        </removeTraits>
+      </li>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Male_BodyPurist</defName>
+    <issue>TraitEnforcerMale</issue>
+    <label>BodyPurist</label>
+    <description>Enforce body purist trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Male</gender>
+    <comps>
+      <li Class="PTEI.PTEIPreceptComp_Standard">
+        <trait>BodyPurist</trait>
+        <conflictingTraits>
+          <li>Transhumanist</li>
+        </conflictingTraits>
+      </li>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Male_Cannibal</defName>
+    <issue>TraitEnforcerMale</issue>
+    <label>Cannibal</label>
+    <description>Enforce cannibal trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Male</gender>
+    <comps>
+      <li Class="PTEI.PTEIPreceptComp_Standard">
+        <trait>Cannibal</trait>
+      </li>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Male_ChemicalFascination</defName>
+    <issue>TraitEnforcerMale</issue>
+    <label>ChemicalFascination</label>
+    <description>Enforce chemical fascination trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Male</gender>
+    <comps>
+      <li Class="PTEI.PTEIPreceptComp_Standard">
+        <trait>DrugDesire</trait>
+        <degree>2</degree>
+        <conflictingTraits>
+          <li>DrugDesire</li>
+        </conflictingTraits>
+      </li>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Male_ChemicalInterest</defName>
+    <issue>TraitEnforcerMale</issue>
+    <label>ChemicalInterest</label>
+    <description>Enforce chemical interest trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Male</gender>
+    <comps>
+      <li Class="PTEI.PTEIPreceptComp_Standard">
+        <trait>DrugDesire</trait>
+        <degree>1</degree>
+        <conflictingTraits>
+          <li>DrugDesire</li>
+        </conflictingTraits>
+      </li>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Male_Gay</defName>
+    <issue>TraitEnforcerMale</issue>
+    <label>Gay</label>
+    <description>Enforce gay trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Male</gender>
+    <comps>
+      <li Class="PTEI.PTEIPreceptComp_Standard">
+        <trait>Gay</trait>
+        <conflictingTraits>
+            <li>Asexual</li>
+        </conflictingTraits>
+        <removeTraits>
+            <li>Bisexual</li>
+        </removeTraits>
+      </li>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Male_Gourmand</defName>
+    <issue>TraitEnforcerMale</issue>
+    <label>Gourmand</label>
+    <description>Enforce gourmand trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Male</gender>
+    <comps>
+      <li Class="PTEI.PTEIPreceptComp_Standard">
+        <trait>Gourmand</trait>
+        <conflictingTraits>
+          <li>Ascetic</li>
+        </conflictingTraits>
+      </li>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Male_Jealous</defName>
+    <issue>TraitEnforcerMale</issue>
+    <label>Jealous</label>
+    <description>Enforce jealous trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Male</gender>
+    <comps>
+      <li Class="PTEI.PTEIPreceptComp_Standard">
+        <trait>Jealous</trait>
+      </li>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Male_Masochist</defName>
+    <issue>TraitEnforcerMale</issue>
+    <label>Masochist</label>
+    <description>Enforce masochist trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Male</gender>
+    <comps>
+      <li Class="PTEI.PTEIPreceptComp_Standard">
+        <trait>Masochist</trait>
+        <conflictingTraits>
+          <li>Wimp</li>
+        </conflictingTraits>
+      </li>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Male_Nudist</defName>
+    <issue>TraitEnforcerMale</issue>
+    <label>Nudist</label>
+    <description>Enforce nudist trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Male</gender>
+    <comps>
+      <li Class="PTEI.PTEIPreceptComp_Standard">
+        <trait>Nudist</trait>
+      </li>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Male_Psychopath</defName>
+    <issue>TraitEnforcerMale</issue>
+    <label>Psychopath</label>
+    <description>Enforce psychopath trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Male</gender>
+    <comps>
+      <li Class="PTEI.PTEIPreceptComp_Standard">
+        <trait>Psychopath</trait>
+        <conflictingTraits>
+          <li>Kind</li>
+        </conflictingTraits>
+      </li>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Male_Pyromaniac</defName>
+    <issue>TraitEnforcerMale</issue>
+    <label>Pyromaniac</label>
+    <description>Enforce pyromaniac trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Male</gender>
+    <comps>
+      <li Class="PTEI.PTEIPreceptComp_Standard">
+        <trait>Pyromaniac</trait>
+      </li>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Male_Straight</defName>
+    <issue>TraitEnforcerMale</issue>
+    <label>Straight</label>
+    <description>Enforce straight trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Male</gender>
+    <comps>
+      <li Class="PTEI.PTEIPreceptComp_Standard">
+        <conflictingTraits>
+            <li>Asexual</li>
+        </conflictingTraits>
+        <removeTraits>
+            <li>Bisexual</li>
+            <li>Gay</li>
+        </removeTraits>
+      </li>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Male_Teetotaler</defName>
+    <issue>TraitEnforcerMale</issue>
+    <label>Teetotaler</label>
+    <description>Enforce Teetotaler trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Male</gender>
+    <comps>
+      <li Class="PTEI.PTEIPreceptComp_Standard">
+        <trait>DrugDesire</trait>
+        <degree>-1</degree>
+        <conflictingTraits>
+          <li>DrugDesire</li>
+        </conflictingTraits>
+      </li>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Male_Transhumanist</defName>
+    <issue>TraitEnforcerMale</issue>
+    <label>Transhumanist</label>
+    <description>Enforce transhumanist trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Male</gender>
+    <comps>
+      <li Class="PTEI.PTEIPreceptComp_Standard">
+        <trait>Transhumanist</trait>
+        <conflictingTraits>
+          <li>BodyPurist</li>
+        </conflictingTraits>
+      </li>
+    </comps>
+  </PreceptDef>
+
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Male_Undergrounder</defName>
+    <issue>TraitEnforcerMale</issue>
+    <label>Undergrounder</label>
+    <description>Enforce undergrounder trait</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Male</gender>
+    <comps>
+      <li Class="PTEI.PTEIPreceptComp_Standard">
+        <trait>Undergrounder</trait>
+      </li>
+    </comps>
+  </PreceptDef>
+</Defs>
