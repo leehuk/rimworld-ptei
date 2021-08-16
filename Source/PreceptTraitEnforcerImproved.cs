@@ -8,11 +8,6 @@ using Verse.AI;
 
 namespace PTEI
 {
-    public class PTEIPreceptDef_Gendered : PreceptDef
-    {
-        public Gender gender;
-    }
-
     [StaticConstructorOnStartup]
     static class PreceptTraitEnforcerImproved
     {
@@ -57,12 +52,47 @@ namespace PTEI
                         continue;
                     }
 
-                    for (int i = 0; i < def.comps.Count; i++)
+                    if (def == PTEIPreceptDefOf_Gendered.PTEI_Male_Custom)
                     {
-                        if(def.comps[i].GetType() == typeof(PTEIPreceptComp_Standard))
+                        PTEIPreceptComp_Standard pcomp = new PTEIPreceptComp_Standard();
+
+                        if (DefDatabase<TraitDef>.AllDefsListForReading.FindIndex(t => t.defName == PTEISettings.TraitSettingMale) == -1)
                         {
-                            PTEIPreceptComp_Standard pcomp = (PTEIPreceptComp_Standard)def.comps[i];
-                            pcomp.ApplyPTEI(pawn);
+                            Log.Message("[PTEI]: Unable to locate male custom trait");
+                            continue;
+                        }
+
+                        pcomp.trait = DefDatabase<TraitDef>.AllDefsListForReading.Find(t => t.defName == PTEISettings.TraitSettingMale);
+                        pcomp.degree = PTEISettings.TraitDegreeMale;
+                        pcomp.conflictingTraits = pcomp.trait.conflictingTraits;
+
+                        pcomp.ApplyPTEI(pawn);
+                    }
+                    else if (def == PTEIPreceptDefOf_Gendered.PTEI_Female_Custom)
+                    {
+                        PTEIPreceptComp_Standard pcomp = new PTEIPreceptComp_Standard();
+
+                        if (DefDatabase<TraitDef>.AllDefsListForReading.FindIndex(t => t.defName == PTEISettings.TraitSettingFemale) == -1)
+                        {
+                            Log.Message("[PTEI]: Unable to locate female custom trait");
+                            continue;
+                        }
+
+                        pcomp.trait = DefDatabase<TraitDef>.AllDefsListForReading.Find(t => t.defName == PTEISettings.TraitSettingFemale);
+                        pcomp.degree = PTEISettings.TraitDegreeFemale;
+                        pcomp.conflictingTraits = pcomp.trait.conflictingTraits;
+
+                        pcomp.ApplyPTEI(pawn);
+                    }
+                    else
+                    {
+                        for (int i = 0; i < def.comps.Count; i++)
+                        {
+                            if (def.comps[i].GetType() == typeof(PTEIPreceptComp_Standard))
+                            {
+                                PTEIPreceptComp_Standard pcomp = (PTEIPreceptComp_Standard)def.comps[i];
+                                pcomp.ApplyPTEI(pawn);
+                            }
                         }
                     }
                 }

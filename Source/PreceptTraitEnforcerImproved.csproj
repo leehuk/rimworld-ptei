@@ -64,9 +64,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PTEIDef.cs" />
     <Compile Include="PTEIPreceptComp_Standard.cs" />
     <Compile Include="PreceptTraitEnforcerImproved.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

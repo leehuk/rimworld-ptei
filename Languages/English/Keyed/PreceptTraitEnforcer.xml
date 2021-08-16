@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-	<PreceptTraitEnforcer>Precept Trait Enforcer</PreceptTraitEnforcer>
-	<setting_pte_genderMode_label>Gender Mode</setting_pte_genderMode_label>
-	<setting_pte_genderMode_desc>Controls which genders traits are enforced on:
-&lt;b&gt;All:&lt;/b&gt; All genders
-&lt;b&gt;Supremacy Meme:&lt;/b&gt; Only the gender matching the supremacy meme.  All genders if no supremacy meme.
-&lt;b&gt;Female:&lt;/b&gt; Female only
-&lt;b&gt;Male:&lt;/b&gt; Male only</setting_pte_genderMode_desc>
-	<setting_pte_genderMode_All>All</setting_pte_genderMode_All>
-	<setting_pte_genderMode_Meme>Supremacy Meme</setting_pte_genderMode_Meme>
-	<setting_pte_genderMode_Female>Female</setting_pte_genderMode_Female>
-	<setting_pte_genderMode_Male>Male</setting_pte_genderMode_Male>
+	<PTEI>Precept Trait Enforcer Improved</PTEI>
+	<setting_pte_mtrait_label>Custom Male Trait</setting_pte_mtrait_label>
+	<setting_pte_ftrait_label>Custom Female Trait</setting_pte_ftrait_label>
 </LanguageData>

@@ -5,64 +5,77 @@ using RimWorld;
 using Verse;
 using UnityEngine;
 
-namespace PreceptTraitEnforcer
+namespace PTEI
 {
-    public class PTESettings : ModSettings
+    public class PTEISettings : ModSettings
     {
-        public enum GenderMode
-        {
-            All,
-            Meme,
-            Female,
-            Male
-        }
-        public static string GenderSetting = GenderMode.All.ToString();
-        public static List<FloatMenuOption> GenderOptions;
+        public static List<FloatMenuOption> TraitOptionsMale;
+        public static List<FloatMenuOption> TraitOptionsFemale;
+        public static string TraitSettingMale = "-";
+        public static string TraitSettingFemale = "-";
+        public static int TraitDegreeMale = 0;
+        public static int TraitDegreeFemale = 0;
 
         public override void ExposeData()
         {
-            Scribe_Values.Look(ref GenderSetting, "GenderSetting");
+            Scribe_Values.Look(ref TraitSettingMale, "TraitSettingMale");
+            Scribe_Values.Look(ref TraitSettingFemale, "TraitSettingFemale");
+            Scribe_Values.Look(ref TraitDegreeMale, "TraitDegreeMale");
+            Scribe_Values.Look(ref TraitDegreeFemale, "TraitDegreeFemale");
             base.ExposeData();
         }
 
-        public class PTEMod : Mod
+        public class PTEIMod : Mod
         {
-            PTESettings settings;
+            PTEISettings settings;
 
-            public PTEMod(ModContentPack content) : base(content)
+            public PTEIMod(ModContentPack content) : base(content)
             {
-                this.settings = GetSettings<PTESettings>();
+                this.settings = GetSettings<PTEISettings>();
             }
 
             public override void DoSettingsWindowContents(Rect inRect)
             {
-                GenderOptions = Enum.GetNames(typeof(GenderMode)).Select(g => new FloatMenuOption($"setting_pte_genderMode_{g}".TranslateSimple(), () => GenderSetting = g)).ToList();
+                TraitOptionsMale = new List<FloatMenuOption>() { new FloatMenuOption("-", () => { TraitSettingMale = "-"; TraitDegreeMale = 0; }) };
+                TraitOptionsFemale = new List<FloatMenuOption>() { new FloatMenuOption("-", () => { TraitSettingFemale = "-"; TraitDegreeFemale = 0; }) };
 
-                var styleLabel = new Rect(0f, 0f, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight);
-                var styleDesc = new Rect(0f, Text.LineHeight, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight*5);
-                var styleField = new Rect(styleLabel.width + 5f, 0f, inRect.width - styleLabel.width - 5f, Text.LineHeight);
-
-                GUI.BeginGroup(inRect);
-                Widgets.Label(styleLabel, "setting_pte_genderMode_label".TranslateSimple());
-
-                if (Widgets.ButtonText(styleField, $"setting_pte_genderMode_{GenderSetting}".TranslateSimple()))
+                foreach (TraitDef trait in DefDatabase<TraitDef>.AllDefsListForReading)
                 {
-                    Find.WindowStack.Add(new FloatMenu(GenderOptions));
+                    foreach (TraitDegreeData degree in trait.degreeDatas)
+                    {
+                        TraitOptionsMale.Add(new FloatMenuOption(degree.GetLabelFor(Gender.Male), () => { TraitSettingMale = trait.defName; TraitDegreeMale = degree.degree; }));
+                        TraitOptionsFemale.Add(new FloatMenuOption(degree.GetLabelFor(Gender.Female), () => { TraitSettingFemale = trait.defName; TraitDegreeFemale = degree.degree; }));
+                    }
                 }
 
-                Widgets.Label(styleDesc, "setting_pte_genderMode_desc".TranslateSimple());
+                var styleLabelMale = new Rect(0f, 0f, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight);
+                var styleFieldMale = new Rect(styleLabelMale.width + 5f, 0f, inRect.width - styleLabelMale.width - 5f, Text.LineHeight);
+
+                var styleLabelFemale = new Rect(0f, Text.LineHeight * 2, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight);
+                var styleFieldFemale = new Rect(styleLabelFemale.width + 5f, Text.LineHeight * 2, inRect.width - styleLabelFemale.width - 5f, Text.LineHeight);
+
+                GUI.BeginGroup(inRect);
+
+                Widgets.Label(styleLabelMale, "setting_pte_mtrait_label".TranslateSimple());
+                if (Widgets.ButtonText(styleFieldMale, TraitSettingMale))
+                {
+                    Find.WindowStack.Add(new FloatMenu(TraitOptionsMale));
+                }
+
+                Widgets.Label(styleLabelFemale, "setting_pte_ftrait_label".TranslateSimple());
+                if (Widgets.ButtonText(styleFieldFemale, TraitSettingFemale))
+                {
+                    Find.WindowStack.Add(new FloatMenu(TraitOptionsFemale));
+                }
 
                 GUI.EndGroup();
 
-                /*
-                Listing_Standard listingStandard = new Listing_Standard();
-                listingStandard.Begin(inRect);
-                listingStandard.End();*/
                 base.DoSettingsWindowContents(inRect);
             }
+
             public override string SettingsCategory()
             {
-                return "PreceptTraitEnforcer".TranslateSimple();
+                return "PTEI".TranslateSimple();
             }
         }
     }

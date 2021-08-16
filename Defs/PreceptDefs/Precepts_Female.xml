@@ -355,4 +355,17 @@
       </li>
     </comps>
   </PreceptDef>
+
+  <PreceptDef Class="PTEI.PTEIPreceptDef_Gendered">
+    <defName>PTEI_Female_Custom</defName>
+    <issue>TraitEnforcerFemale</issue>
+    <label>Custom</label>
+    <description>Enforce custom trait from mod setting</description>
+    <impact>Medium</impact>
+    <displayOrderInIssue>1000</displayOrderInIssue>
+    <displayOrderInImpact>5000</displayOrderInImpact>
+    <gender>Female</gender>
+    <comps>
+    </comps>
+  </PreceptDef>
 </Defs>

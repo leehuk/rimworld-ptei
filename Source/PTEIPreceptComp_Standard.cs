@@ -70,17 +70,14 @@ namespace PTEI
         {
             foreach (TraitDef _trait in this.removeTraits)
             {
-                Log.Message("[PTEI] Removing traits: this.removeTraits");
                 RemoveTrait(pawn, _trait);
             }
 
             // This could happen if someone forces e.g. chemfasc to not conflict with cheminterest
             if(this.trait != null)
             {
-                Log.Message("[PTEI] Removing traits: this.trait");
                 RemoveTrait(pawn, this.trait);
 
-                Log.Message("[PTEI] Removing traits: sanity");
                 // Double sanity for anyone deciding to make it ignore conflicts, but doesn't setup removeTraits
                 bool reloop = false;
                 do
