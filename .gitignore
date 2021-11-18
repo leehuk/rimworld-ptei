@@ -1,4 +1,5 @@
 Assemblies/*.dll
 Source/.vs/
+Source/bin/
 Source/obj/Debug
 1.*/Assemblies/*.dll
