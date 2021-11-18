@@ -15,6 +15,7 @@ namespace PTEI
         public static string TraitSettingFemale = "-";
         public static int TraitDegreeMale = 0;
         public static int TraitDegreeFemale = 0;
+        public static bool TraitOverride = false;
         public static bool DebugLogging = false;
 
         public override void ExposeData()
@@ -23,6 +24,7 @@ namespace PTEI
             Scribe_Values.Look(ref TraitSettingFemale, "TraitSettingFemale");
             Scribe_Values.Look(ref TraitDegreeMale, "TraitDegreeMale");
             Scribe_Values.Look(ref TraitDegreeFemale, "TraitDegreeFemale");
+            Scribe_Values.Look(ref TraitOverride, "TraitOverride");
             Scribe_Values.Look(ref DebugLogging, "DebugLogging");
             base.ExposeData();
         }
@@ -56,6 +58,10 @@ namespace PTEI
                 var styleLabelFemale = new Rect(0f, Text.LineHeight * 2, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight);
                 var styleFieldFemale = new Rect(styleLabelFemale.width + 5f, Text.LineHeight * 2, inRect.width - styleLabelFemale.width - 5f, Text.LineHeight);
 
+                var styleLabelOverride = new Rect(0f, Text.LineHeight * 4, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight);
+                var styleFieldOverride = new Rect(styleLabelOverride.width + 5f, Text.LineHeight * 4, inRect.width - styleLabelOverride.width - 5f, Text.LineHeight);
+                var styleDescOverride = new Rect(0f, Text.LineHeight * 5, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight*2);
+
                 var styleLabelDebug = new Rect(0f, Text.LineHeight * 7, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight);
                 var styleFieldDebug = new Rect(styleLabelOverride.width + 5f, Text.LineHeight * 7, inRect.width - styleLabelOverride.width - 5f, Text.LineHeight);
 
@@ -72,6 +78,10 @@ namespace PTEI
                 {
                     Find.WindowStack.Add(new FloatMenu(TraitOptionsFemale));
                 }
+
+                Widgets.Label(styleLabelOverride, "setting_pte_override_label".TranslateSimple());
+                Widgets.CheckboxLabeled(styleFieldOverride, "", ref TraitOverride);
+                Widgets.Label(styleDescOverride, "setting_pte_override_desc".TranslateSimple());
 
                 Widgets.Label(styleLabelDebug, "setting_pte_debug_label".TranslateSimple());
                 Widgets.CheckboxLabeled(styleFieldDebug, "", ref DebugLogging);

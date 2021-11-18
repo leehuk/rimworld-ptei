@@ -36,12 +36,15 @@ namespace PTEI
 
         private bool Conflicts(Pawn pawn)
         {
-            for(int i = 0; i < this.conflictingTraits.Count; i++)
+            if (PTEISettings.TraitOverride == false)
             {
-                if(pawn.story.traits.HasTrait(this.conflictingTraits[i]))
+                for (int i = 0; i < this.conflictingTraits.Count; i++)
                 {
-                    PTEIDebug.DebugLog("PTEIPreceptComp_Standard.Conflicts(): Trait conflict: " + this.conflictingTraits[i].defName);
-                    return true;
+                    if (pawn.story.traits.HasTrait(this.conflictingTraits[i]))
+                    {
+                        PTEIDebug.DebugLog("PTEIPreceptComp_Standard.Conflicts(): Trait conflict: " + this.conflictingTraits[i].defName);
+                        return true;
+                    }
                 }
             }
 
@@ -99,7 +102,7 @@ namespace PTEI
 
         public void ApplyPTEI(Pawn pawn)
         {
-            if(this.trait != null && pawn.story.traits.HasTrait(this.trait))
+            if(this.trait != null && PTEISettings.TraitOverride == false && pawn.story.traits.HasTrait(this.trait))
             {
                 PTEIDebug.DebugLog("PTEIPreceptComp_Standard.ApplyPTEI(): Pawn -" + pawn.Name + "- already has trait");
                 return;

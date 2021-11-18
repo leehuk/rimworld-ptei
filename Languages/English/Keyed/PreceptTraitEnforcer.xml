@@ -3,5 +3,8 @@
 	<PTEI>Precept Trait Enforcer Improved</PTEI>
 	<setting_pte_mtrait_label>Custom Male Trait</setting_pte_mtrait_label>
 	<setting_pte_ftrait_label>Custom Female Trait</setting_pte_ftrait_label>
+	<setting_pte_override_label>Enable trait overriding</setting_pte_override_label>
+	<setting_pte_override_desc>Disabled (default): Pawns with conflicting traits do not have the new trait applied
+Enabled: Conflicting traits are removed from pawns so the new trait can be applied</setting_pte_override_desc>
 	<setting_pte_debug_label>Enable debug logging</setting_pte_debug_label>
 </LanguageData>
