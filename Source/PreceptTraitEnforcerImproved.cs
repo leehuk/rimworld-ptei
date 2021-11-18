@@ -23,7 +23,7 @@ namespace PTEI
             {
                 var hmethod = new HarmonyMethod(pmethod);
                 harmony.Patch(rwmethod, null, hmethod);
-                Log.Message("PreceptTraitEnforcerImproved: Patched SetIdeo()");
+                Log.Message("[PTEI]: Patched SetIdeo()");
             }
         }
 
@@ -116,31 +116,5 @@ namespace PTEI
 
             return (Pawn)_pawn?.GetValue(_this);
         }
-
-        /*
-        private static void TraitResetLoveInterest(Pawn pawn, TraitDef trait)
-        {
-            /*
-            if(trait == null || trait == TraitDefOf.Asexual || trait == TraitDefOf.Gay)
-            {
-                List<DirectPawnRelation> removeRelations = new List<DirectPawnRelation>();
-
-                foreach(DirectPawnRelation relation in pawn.relations.DirectRelations)
-                {
-                    if(relation.def == PawnRelationDefOf.Fiance || relation.def == PawnRelationDefOf.Lover || relation.def == PawnRelationDefOf.Spouse)
-                    {
-                        if(trait == TraitDefOf.Asexual || relation.otherPawn.gender != pawn.gender)
-                        {
-                            removeRelations.Add(relation);
-                        }
-                    }
-                }
-
-                foreach(DirectPawnRelation relation in removeRelations)
-                {
-                    pawn.relations.RemoveDirectRelation(relation);
-                }
-            }
-        }*/
     }
 }

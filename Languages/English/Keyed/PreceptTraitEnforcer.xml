@@ -3,4 +3,5 @@
 	<PTEI>Precept Trait Enforcer Improved</PTEI>
 	<setting_pte_mtrait_label>Custom Male Trait</setting_pte_mtrait_label>
 	<setting_pte_ftrait_label>Custom Female Trait</setting_pte_ftrait_label>
+	<setting_pte_debug_label>Enable debug logging</setting_pte_debug_label>
 </LanguageData>
