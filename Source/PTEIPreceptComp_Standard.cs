@@ -114,6 +114,15 @@ namespace PTEI
                 return;
             }
 
+            Random rnd = new Random();
+            int convres = rnd.Next(101);
+
+            if((pawn.gender == Gender.Male && PTEISettings.TraitChanceMale < 100 && convres > PTEISettings.TraitChanceMale) || (pawn.gender == Gender.Female && PTEISettings.TraitChanceFemale < 100 && convres > PTEISettings.TraitChanceFemale))
+            {
+                PTEIDebug.DebugLog("PTEIPreceptComp_Standard.ApplyPTEI(): Pawn -" + pawn.Name + "- chance failed: " + convres.ToString());
+                return;
+            }
+
             PTEIDebug.DebugLog("PTEIPreceptComp_Standard.ApplyPTEI(): Pawn -" + pawn.Name + "- adding trait: " + this.trait.defName);
             this.RemoveTraits(pawn);
             this.ApplyTraits(pawn);

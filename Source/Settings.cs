@@ -15,6 +15,8 @@ namespace PTEI
         public static string TraitSettingFemale = "-";
         public static int TraitDegreeMale = 0;
         public static int TraitDegreeFemale = 0;
+        public static int TraitChanceMale = 100;
+        public static int TraitChanceFemale = 100;
         public static bool TraitOverride = false;
         public static bool DebugLogging = false;
 
@@ -24,6 +26,8 @@ namespace PTEI
             Scribe_Values.Look(ref TraitSettingFemale, "TraitSettingFemale");
             Scribe_Values.Look(ref TraitDegreeMale, "TraitDegreeMale");
             Scribe_Values.Look(ref TraitDegreeFemale, "TraitDegreeFemale");
+            Scribe_Values.Look(ref TraitChanceMale, "TraitChanceMale", 100, true);
+            Scribe_Values.Look(ref TraitChanceFemale, "TraitChanceFemale", 100, true);
             Scribe_Values.Look(ref TraitOverride, "TraitOverride");
             Scribe_Values.Look(ref DebugLogging, "DebugLogging");
             base.ExposeData();
@@ -52,18 +56,33 @@ namespace PTEI
                     }
                 }
 
-                var styleLabelMale = new Rect(0f, 0f, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight);
-                var styleFieldMale = new Rect(styleLabelMale.width + 5f, 0f, inRect.width - styleLabelMale.width - 5f, Text.LineHeight);
+                float linecounter = 1f;
 
-                var styleLabelFemale = new Rect(0f, Text.LineHeight * 2, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight);
-                var styleFieldFemale = new Rect(styleLabelFemale.width + 5f, Text.LineHeight * 2, inRect.width - styleLabelFemale.width - 5f, Text.LineHeight);
+                var styleLabelMale = new Rect(0f, Text.LineHeight * linecounter, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight);
+                var styleFieldMale = new Rect(styleLabelMale.width + 5f, styleLabelMale.y, inRect.width - styleLabelMale.width - 5f, Text.LineHeight);
+                linecounter += 1f;
 
-                var styleLabelOverride = new Rect(0f, Text.LineHeight * 4, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight);
-                var styleFieldOverride = new Rect(styleLabelOverride.width + 5f, Text.LineHeight * 4, inRect.width - styleLabelOverride.width - 5f, Text.LineHeight);
-                var styleDescOverride = new Rect(0f, Text.LineHeight * 5, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight*2);
+                var styleLabelFemale = new Rect(0f, Text.LineHeight * linecounter, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight);
+                var styleFieldFemale = new Rect(styleLabelFemale.width + 5f, styleLabelFemale.y, inRect.width - styleLabelFemale.width - 5f, Text.LineHeight);
+                linecounter += 1.5f;
 
-                var styleLabelDebug = new Rect(0f, Text.LineHeight * 7, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight);
-                var styleFieldDebug = new Rect(styleLabelOverride.width + 5f, Text.LineHeight * 7, inRect.width - styleLabelOverride.width - 5f, Text.LineHeight);
+                var styleLabelMaleChance = new Rect(0f, Text.LineHeight * linecounter, Mathf.CeilToInt(inRect.width * 0.5f), Text.LineHeight);
+                var styleFieldMaleChance = new Rect(styleLabelMaleChance.width + 5f, styleLabelMaleChance.y, inRect.width - styleLabelMaleChance.width - 5f, Text.LineHeight);
+                linecounter += 1f;
+
+                var styleLabelFemaleChance = new Rect(0f, Text.LineHeight * linecounter, Mathf.CeilToInt(inRect.width * 0.5f), Text.LineHeight);
+                var styleFieldFemaleChance = new Rect(styleLabelFemaleChance.width + 5f, styleLabelFemaleChance.y, inRect.width - styleLabelFemaleChance.width - 5f, Text.LineHeight);
+                linecounter += 1.5f;
+
+                var styleLabelOverride = new Rect(0f, Text.LineHeight * linecounter, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight);
+                var styleFieldOverride = new Rect(styleLabelOverride.width + 5f, styleLabelOverride.y, inRect.width - styleLabelOverride.width - 5f, Text.LineHeight);
+                linecounter += 1f;
+                var styleDescOverride = new Rect(0f, Text.LineHeight * linecounter, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight*2);
+                linecounter += 2.5f;
+
+                var styleLabelDebug = new Rect(0f, Text.LineHeight * linecounter, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight);
+                var styleFieldDebug = new Rect(styleLabelOverride.width + 5f, styleLabelDebug.y, inRect.width - styleLabelOverride.width - 5f, Text.LineHeight);
+                linecounter += 1.5f;
 
                 GUI.BeginGroup(inRect);
 
@@ -78,6 +97,12 @@ namespace PTEI
                 {
                     Find.WindowStack.Add(new FloatMenu(TraitOptionsFemale));
                 }
+
+                Widgets.Label(styleLabelMaleChance, "setting_pte_mchance_label".TranslateSimple());
+                TraitChanceMale = (int)Widgets.HorizontalSlider(styleFieldMaleChance, TraitChanceMale, 0f, 100f);
+
+                Widgets.Label(styleLabelFemaleChance, "setting_pte_fchance_label".TranslateSimple());
+                TraitChanceFemale = (int)Widgets.HorizontalSlider(styleFieldFemaleChance, TraitChanceFemale, 0f, 100f);
 
                 Widgets.Label(styleLabelOverride, "setting_pte_override_label".TranslateSimple());
                 Widgets.CheckboxLabeled(styleFieldOverride, "", ref TraitOverride);
