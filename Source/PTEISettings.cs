@@ -36,6 +36,17 @@ namespace PTEI
 
         public void DoSettingsWindowContents(Rect inRect)
         {
+            Listing_Standard options = new Listing_Standard();
+
+            options.Begin(inRect);
+
+            options.Label("setting_pte_mchance_label".TranslateSimple());
+            TraitChanceMale = (int)options.Slider(TraitChanceMale, 0f, 100f);
+            options.Label("setting_pte_fchance_label".TranslateSimple());
+            TraitChanceFemale = (int)options.Slider(TraitChanceFemale, 0f, 100f);
+            options.CheckboxLabeled("setting_pte_override_label".TranslateSimple(), ref TraitOverride);
+            options.CheckboxLabeled("setting_pte_debug_label".TranslateSimple(), ref DebugLogging);
+
             TraitOptionsMale = new List<FloatMenuOption>() { new FloatMenuOption("-", () => { TraitSettingMale = "-"; TraitDegreeMale = 0; }) };
             TraitOptionsFemale = new List<FloatMenuOption>() { new FloatMenuOption("-", () => { TraitSettingFemale = "-"; TraitDegreeFemale = 0; }) };
 
@@ -48,62 +59,17 @@ namespace PTEI
                 }
             }
 
-            float linecounter = 1f;
-
-            var styleLabelMale = new Rect(0f, Text.LineHeight * linecounter, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight);
-            var styleFieldMale = new Rect(styleLabelMale.width + 5f, styleLabelMale.y, inRect.width - styleLabelMale.width - 5f, Text.LineHeight);
-            linecounter += 1f;
-
-            var styleLabelFemale = new Rect(0f, Text.LineHeight * linecounter, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight);
-            var styleFieldFemale = new Rect(styleLabelFemale.width + 5f, styleLabelFemale.y, inRect.width - styleLabelFemale.width - 5f, Text.LineHeight);
-            linecounter += 1.5f;
-
-            var styleLabelMaleChance = new Rect(0f, Text.LineHeight * linecounter, Mathf.CeilToInt(inRect.width * 0.5f), Text.LineHeight);
-            var styleFieldMaleChance = new Rect(styleLabelMaleChance.width + 5f, styleLabelMaleChance.y, inRect.width - styleLabelMaleChance.width - 5f, Text.LineHeight);
-            linecounter += 1f;
-
-            var styleLabelFemaleChance = new Rect(0f, Text.LineHeight * linecounter, Mathf.CeilToInt(inRect.width * 0.5f), Text.LineHeight);
-            var styleFieldFemaleChance = new Rect(styleLabelFemaleChance.width + 5f, styleLabelFemaleChance.y, inRect.width - styleLabelFemaleChance.width - 5f, Text.LineHeight);
-            linecounter += 1.5f;
-
-            var styleLabelOverride = new Rect(0f, Text.LineHeight * linecounter, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight);
-            var styleFieldOverride = new Rect(styleLabelOverride.width + 5f, styleLabelOverride.y, inRect.width - styleLabelOverride.width - 5f, Text.LineHeight);
-            linecounter += 1f;
-            var styleDescOverride = new Rect(0f, Text.LineHeight * linecounter, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight * 2);
-            linecounter += 2.5f;
-
-            var styleLabelDebug = new Rect(0f, Text.LineHeight * linecounter, Mathf.CeilToInt(inRect.width * 0.7f), Text.LineHeight);
-            var styleFieldDebug = new Rect(styleLabelOverride.width + 5f, styleLabelDebug.y, inRect.width - styleLabelOverride.width - 5f, Text.LineHeight);
-            linecounter += 1.5f;
-
-            GUI.BeginGroup(inRect);
-
-            Widgets.Label(styleLabelMale, "setting_pte_mtrait_label".TranslateSimple());
-            if (Widgets.ButtonText(styleFieldMale, TraitSettingMale))
+            if(options.ButtonTextLabeled("setting_pte_mtrait_label".TranslateSimple(), TraitSettingMale))
             {
                 Find.WindowStack.Add(new FloatMenu(TraitOptionsMale));
             }
 
-            Widgets.Label(styleLabelFemale, "setting_pte_ftrait_label".TranslateSimple());
-            if (Widgets.ButtonText(styleFieldFemale, TraitSettingFemale))
+            if(options.ButtonTextLabeled("setting_pte_ftrait_label".TranslateSimple(), TraitSettingFemale))
             {
                 Find.WindowStack.Add(new FloatMenu(TraitOptionsFemale));
             }
 
-            Widgets.Label(styleLabelMaleChance, "setting_pte_mchance_label".TranslateSimple());
-            TraitChanceMale = (int)Widgets.HorizontalSlider(styleFieldMaleChance, TraitChanceMale, 0f, 100f);
-
-            Widgets.Label(styleLabelFemaleChance, "setting_pte_fchance_label".TranslateSimple());
-            TraitChanceFemale = (int)Widgets.HorizontalSlider(styleFieldFemaleChance, TraitChanceFemale, 0f, 100f);
-
-            Widgets.Label(styleLabelOverride, "setting_pte_override_label".TranslateSimple());
-            Widgets.CheckboxLabeled(styleFieldOverride, "", ref TraitOverride);
-            Widgets.Label(styleDescOverride, "setting_pte_override_desc".TranslateSimple());
-
-            Widgets.Label(styleLabelDebug, "setting_pte_debug_label".TranslateSimple());
-            Widgets.CheckboxLabeled(styleFieldDebug, "", ref DebugLogging);
-
-            GUI.EndGroup();
+            options.End();
         }
     }
 }
