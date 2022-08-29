@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using RimWorld;
 using Verse;
+using Verse.Sound;
 using UnityEngine;
+using static PTEI.PTEISettingsStatic;
 
 namespace PTEI
 {
@@ -20,6 +23,11 @@ namespace PTEI
         public static bool TraitOverride = false;
         public static bool DebugLogging = false;
 
+        public static HashSet<string> TraitsEnabled;
+
+        private static Vector2 addTraitsScroller;
+        private static int addTraitsLines;
+
         public override void ExposeData()
         {
             Scribe_Values.Look(ref TraitSettingMale, "TraitSettingMale");
@@ -30,6 +38,8 @@ namespace PTEI
             Scribe_Values.Look(ref TraitChanceFemale, "TraitChanceFemale", 100, true);
             Scribe_Values.Look(ref TraitOverride, "TraitOverride");
             Scribe_Values.Look(ref DebugLogging, "DebugLogging");
+
+            Scribe_Collections.Look(ref TraitsEnabled, "keys", LookMode.Value);
 
             base.ExposeData();
         }
@@ -46,6 +56,7 @@ namespace PTEI
             TraitChanceFemale = (int)options.Slider(TraitChanceFemale, 0f, 100f);
             options.CheckboxLabeled("setting_pte_override_label".TranslateSimple(), ref TraitOverride);
             options.CheckboxLabeled("setting_pte_debug_label".TranslateSimple(), ref DebugLogging);
+            options.Gap(Text.LineHeight);
 
             TraitOptionsMale = new List<FloatMenuOption>() { new FloatMenuOption("-", () => { TraitSettingMale = "-"; TraitDegreeMale = 0; }) };
             TraitOptionsFemale = new List<FloatMenuOption>() { new FloatMenuOption("-", () => { TraitSettingFemale = "-"; TraitDegreeFemale = 0; }) };
@@ -59,17 +70,96 @@ namespace PTEI
                 }
             }
 
-            if(options.ButtonTextLabeled("setting_pte_mtrait_label".TranslateSimple(), TraitSettingMale))
+            if (options.ButtonTextLabeled("setting_pte_mtrait_label".TranslateSimple(), TraitSettingMale))
             {
                 Find.WindowStack.Add(new FloatMenu(TraitOptionsMale));
             }
 
-            if(options.ButtonTextLabeled("setting_pte_ftrait_label".TranslateSimple(), TraitSettingFemale))
+            if (options.ButtonTextLabeled("setting_pte_ftrait_label".TranslateSimple(), TraitSettingFemale))
             {
                 Find.WindowStack.Add(new FloatMenu(TraitOptionsFemale));
             }
 
+            options.Label("Additional Traits (Restart Required)");
+            options.Gap(Text.LineHeight / 2);
+
             options.End();
+
+            Rect scrollRect = inRect;
+            scrollRect.y += options.CurHeight;
+            scrollRect.yMax -= options.CurHeight + Text.LineHeight;
+
+            Rect listRect = new Rect(0f, 0f, inRect.width - 30f, (addTraitsLines + 2) * (Text.LineHeight + options.verticalSpacing));
+
+            Widgets.BeginScrollView(scrollRect, ref addTraitsScroller, listRect);
+            options.Begin(listRect);
+            this.DoListTraits(options);
+            options.End();
+            Widgets.EndScrollView();
+        }
+
+        private void DoListTraits(Listing_Standard options)
+        {
+            addTraitsLines = 0;
+
+            SortedList<string, TraitWithDegree> traitlist = new SortedList<string, TraitWithDegree>();
+
+            // we need to order by the degree name, which is inside our trait iterable
+            foreach (TraitDef trait in DefDatabase<TraitDef>.AllDefsListForReading)
+            {
+                foreach (TraitDegreeData degree in trait.degreeDatas)
+                {
+                    traitlist.Add(degree.GetLabelCapFor(Gender.None), new TraitWithDegree(trait, degree));
+                }
+            }
+
+            foreach (KeyValuePair<string, TraitWithDegree> kvp in traitlist)
+            {
+                TraitDef trait = kvp.Value.Trait;
+                TraitDegreeData degree = kvp.Value.Degree;
+
+                string refname = trait.defName + degree.degree.ToString();
+                bool checkOn = TraitsEnabled?.Contains(refname) ?? false;
+
+                Rect rect = options.GetRect(Text.LineHeight);
+
+                string label = degree.GetLabelCapFor(Gender.None);
+                if (!string.IsNullOrEmpty(trait.modContentPack?.Name))
+                {
+                    label += " (" + trait.modContentPack.Name + ")";
+                }
+
+                Widgets.CheckboxLabeled(rect, label, ref checkOn);
+                Widgets.DrawHighlightIfMouseover(rect);
+                if (addTraitsLines % 2 != 0)
+                {
+                    Widgets.DrawLightHighlight(rect);
+                }
+
+                if (checkOn && !(TraitsEnabled.Contains(refname)))
+                {
+                    TraitsEnabled.Add(refname);
+                }
+                else if (!checkOn && TraitsEnabled.Contains(refname))
+                {
+                    TraitsEnabled.Remove(refname);
+                }
+
+                addTraitsLines++;
+            }
         }
     }
+
+    internal class TraitWithDegree
+    {
+        public TraitDef Trait;
+        public TraitDegreeData Degree;
+
+        public TraitWithDegree(TraitDef trait, TraitDegreeData degree)
+        {
+            this.Trait = trait;
+            this.Degree = degree;
+        }
+    }
+
 }
