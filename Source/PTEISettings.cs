@@ -28,6 +28,11 @@ namespace PTEI
         private static Vector2 addTraitsScroller;
         private static int addTraitsLines;
 
+        private static readonly List<string> xmlTraits = new List<string>{
+            "Asexual0", "Bisexual0", "Bloodlust0", "Brawler0", "BodyPurist0", "Cannibal0", "DrugDesire-1", "DrugDesire1", "DrugDesire2",
+            "Gay0", "Gourmand0", "Jealous0", "Masochist0", "Nudist0", "Psychopath0", "Pyromaniac0", "Transhumanist0", "Undergrounder0"
+        };
+
         public override void ExposeData()
         {
             Scribe_Values.Look(ref TraitSettingMale, "TraitSettingMale");
@@ -120,6 +125,11 @@ namespace PTEI
 
                 string refname = trait.defName + degree.degree.ToString();
                 bool checkOn = TraitsEnabled?.Contains(refname) ?? false;
+
+                if (xmlTraits.Contains(refname))
+                {
+                    continue;
+                }
 
                 Rect rect = options.GetRect(Text.LineHeight);
 
