@@ -31,7 +31,7 @@ namespace PTEI
 
                     if(TraitsEnabled.Contains(refname))
                     {
-                        PTEIDebug.DebugLog("Found enabled trait: " + refname);
+                        PTEIDebug.DebugLog("PTEISettingsStatic.InitTraitsEnabled(): Found enabled trait: " + refname);
                         CreatePreceptDef(trait, degree, Gender.Male);
                         CreatePreceptDef(trait, degree, Gender.Female);
                     }
@@ -45,8 +45,6 @@ namespace PTEI
         {
             string refname = trait.defName + degree.degree.ToString();
             string genderstr = gender == Gender.Male ? "Male" : "Female";
-
-            PTEIDebug.DebugLog("CreatePreceptDef(): " + refname + "//" + genderstr);
 
             var precept = new PTEIPreceptDef_Gendered
             {
@@ -64,6 +62,12 @@ namespace PTEI
 
                 comps = new List<PreceptComp>()
             };
+
+            precept.comps.Add(new PTEIPreceptComp_Standard
+            {
+                trait = trait,
+                degree = degree.degree,
+            });
 
             MethodInfo shmethod = typeof(ShortHashGiver).GetMethod("GiveShortHash", BindingFlags.NonPublic|BindingFlags.Static);
             if (shmethod != null)

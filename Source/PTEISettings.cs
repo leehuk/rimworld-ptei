@@ -63,6 +63,7 @@ namespace PTEI
             options.CheckboxLabeled("setting_pte_debug_label".TranslateSimple(), ref DebugLogging);
             options.Gap(Text.LineHeight);
 
+            /*
             TraitOptionsMale = new List<FloatMenuOption>() { new FloatMenuOption("-", () => { TraitSettingMale = "-"; TraitDegreeMale = 0; }) };
             TraitOptionsFemale = new List<FloatMenuOption>() { new FloatMenuOption("-", () => { TraitSettingFemale = "-"; TraitDegreeFemale = 0; }) };
 
@@ -83,7 +84,7 @@ namespace PTEI
             if (options.ButtonTextLabeled("setting_pte_ftrait_label".TranslateSimple(), TraitSettingFemale))
             {
                 Find.WindowStack.Add(new FloatMenu(TraitOptionsFemale));
-            }
+            }*/
 
             options.Label("Additional Traits (Restart Required)");
             options.Gap(Text.LineHeight / 2);

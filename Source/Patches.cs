@@ -54,9 +54,8 @@ namespace PTEI
 
                         pcomp.trait = DefDatabase<TraitDef>.AllDefsListForReading.Find(t => t.defName == PTEISettings.TraitSettingMale);
                         pcomp.degree = PTEISettings.TraitDegreeMale;
-                        pcomp.conflictingTraits = pcomp.trait.conflictingTraits;
 
-                        pcomp.ApplyPTEI(pawn);
+                        pcomp.Apply(pawn);
                     }
                     else if (def == PTEIPreceptDefOf_Gendered.PTEI_Female_Custom)
                     {
@@ -70,9 +69,8 @@ namespace PTEI
 
                         pcomp.trait = DefDatabase<TraitDef>.AllDefsListForReading.Find(t => t.defName == PTEISettings.TraitSettingFemale);
                         pcomp.degree = PTEISettings.TraitDegreeFemale;
-                        pcomp.conflictingTraits = pcomp.trait.conflictingTraits;
 
-                        pcomp.ApplyPTEI(pawn);
+                        pcomp.Apply(pawn);
                     }
                     else
                     {
@@ -81,7 +79,7 @@ namespace PTEI
                             if (def.comps[i].GetType() == typeof(PTEIPreceptComp_Standard))
                             {
                                 PTEIPreceptComp_Standard pcomp = (PTEIPreceptComp_Standard)def.comps[i];
-                                pcomp.ApplyPTEI(pawn);
+                                pcomp.Apply(pawn);
                             }
                         }
                     }

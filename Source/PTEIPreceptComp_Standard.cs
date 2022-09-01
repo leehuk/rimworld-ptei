@@ -11,126 +11,132 @@ namespace PTEI
 {
     public class PTEIPreceptComp_Standard : PreceptComp
     {
+        public TraitDef trait;
+        public int degree = 0;
+        public List<TraitDef> removeTraits = new List<TraitDef>();
+
         public PTEIPreceptComp_Standard() { }
 
-        private void ApplyTraits(Pawn pawn)
+        public void Apply(Pawn pawn)
         {
-            if (this.trait != null)
-            {
-                if (this.degree != 0)
-                {
-                    PTEIDebug.DebugLog("PTEIPreceptComp_Standard.ApplyTraits(): Applying trait/degree: " + this.trait.defName + "/" + this.degree.ToString());
-                    pawn.story.traits.GainTrait(new Trait(this.trait, this.degree));
-                }
-                else
-                {
-                    PTEIDebug.DebugLog("PTEIPreceptComp_Standard.ApplyTraits(): Applying trait: " + this.trait.defName);
-                    pawn.story.traits.GainTrait(new Trait(this.trait));
-                }
-            }
-            else
-            {
-                PTEIDebug.DebugLog("PTEIPreceptComp_Standard.ApplyTraits(): Applying trait: None");
-            }
-        }
+            PTEIDebug.DebugLog("PTEIPreceptComp_Standard.Apply()");
 
-        private bool Conflicts(Pawn pawn)
-        {
-            if (PTEISettings.TraitOverride == false)
+            if(this.trait == null)
             {
-                for (int i = 0; i < this.conflictingTraits.Count; i++)
-                {
-                    if (pawn.story.traits.HasTrait(this.conflictingTraits[i]))
-                    {
-                        PTEIDebug.DebugLog("PTEIPreceptComp_Standard.Conflicts(): Trait conflict: " + this.conflictingTraits[i].defName);
-                        return true;
-                    }
-                }
-            }
-
-            if(this.trait != null && this.trait.requiredWorkTags != WorkTags.None && pawn.WorkTagIsDisabled(this.trait.requiredWorkTags))
-            {
-                PTEIDebug.DebugLog("PTEIPreceptComp_Standard.Conflicts(): Worktag conflict: " + this.trait.requiredWorkTags.ToString());
-                return true;
-            }
-
-            return false;
-        }
-
-        private static void RemoveTrait(Pawn pawn, TraitDef trait)
-        {
-            for (int i = 0; i < pawn.story.traits.allTraits.Count; i++)
-            {
-                if (pawn.story.traits.allTraits[i].def == trait)
-                {
-                    PTEIDebug.DebugLog("PTEIPreceptComp_Standard.RemoveTrait(): Removing trait " + pawn.story.traits.allTraits[i].def.defName);
-                    pawn.story.traits.RemoveTrait(pawn.story.traits.allTraits[i]);
-                    return;
-                }
-            }
-        }
-        private void RemoveTraits(Pawn pawn)
-        {
-            foreach (TraitDef _trait in this.removeTraits)
-            {
-                RemoveTrait(pawn, _trait);
-            }
-
-            // This could happen if someone forces e.g. chemfasc to not conflict with cheminterest
-            if(this.trait != null)
-            {
-                RemoveTrait(pawn, this.trait);
-
-                // Double sanity for anyone deciding to make it ignore conflicts, but doesn't setup removeTraits
-                bool reloop = false;
-                do
-                {
-                    reloop = false;
-
-                    for (int i = 0; i < pawn.story.traits.allTraits.Count; i++)
-                    {
-                        if (pawn.story.traits.allTraits[i].def.ConflictsWith(this.trait))
-                        {
-                            RemoveTrait(pawn, pawn.story.traits.allTraits[i].def);
-                            reloop = true;
-                            break;
-                        }
-                    }
-                } while (reloop == true);
-            }
-        }
-
-        public void ApplyPTEI(Pawn pawn)
-        {
-            if(this.trait != null && PTEISettings.TraitOverride == false && pawn.story.traits.HasTrait(this.trait))
-            {
-                PTEIDebug.DebugLog("PTEIPreceptComp_Standard.ApplyPTEI(): Pawn -" + pawn.Name + "- already has trait");
+                PTEIDebug.DebugLog("PTEIPreceptComp_Standard.Apply(): Trait is null");
                 return;
             }
 
-            if (this.Conflicts(pawn))
+            if((this.degree == 0 && pawn.story.traits.HasTrait(this.trait)) || (this.degree != 0 && pawn.story.traits.HasTrait(this.trait, this.degree)))
             {
-                PTEIDebug.DebugLog("PTEIPreceptComp_Standard.ApplyPTEI(): Pawn -" + pawn.Name + "- conflicts");
+                PTEIDebug.DebugLog("PTEIPreceptComp_Standard.Apply(): Pawn -" + pawn.Name + "- has trait: " + this.trait.defName);
+                return;
+            }
+
+            if(this.Conflicts(pawn))
+            {
+                PTEIDebug.DebugLog("PTEIPreceptComp_Standard.Apply(): Pawn -" + pawn.Name + "- has conflicts");
                 return;
             }
 
             Random rnd = new Random();
             int convres = rnd.Next(101);
 
-            if((pawn.gender == Gender.Male && PTEISettings.TraitChanceMale < 100 && convres > PTEISettings.TraitChanceMale) || (pawn.gender == Gender.Female && PTEISettings.TraitChanceFemale < 100 && convres > PTEISettings.TraitChanceFemale))
+            if ((pawn.gender == Gender.Male && PTEISettings.TraitChanceMale < 100 && convres > PTEISettings.TraitChanceMale) || (pawn.gender == Gender.Female && PTEISettings.TraitChanceFemale < 100 && convres > PTEISettings.TraitChanceFemale))
             {
-                PTEIDebug.DebugLog("PTEIPreceptComp_Standard.ApplyPTEI(): Pawn -" + pawn.Name + "- chance failed: " + convres.ToString());
+                PTEIDebug.DebugLog("PTEIPreceptComp_Standard.Apply(): Pawn -" + pawn.Name + "- chance failed: " + convres.ToString());
                 return;
             }
 
-            PTEIDebug.DebugLog("PTEIPreceptComp_Standard.ApplyPTEI(): Pawn -" + pawn.Name + "- adding trait: " + this.trait.defName);
             this.RemoveTraits(pawn);
-            this.ApplyTraits(pawn);
+
+            PTEIDebug.DebugLog("PTEIPreceptComp_Standard.Apply(): Pawn -" + pawn.Name + "- adding trait: " + this.trait.defName);
+            if (this.degree != 0)
+            {
+                pawn.story.traits.GainTrait(new Trait(this.trait, this.degree));
+            }
+            else
+            {
+                pawn.story.traits.GainTrait(new Trait(this.trait));
+            }
         }
 
-        public TraitDef trait;
-        public int degree = 0;
-        public List<TraitDef> conflictingTraits = new List<TraitDef>();
-        public List<TraitDef> removeTraits = new List<TraitDef>();
+        private bool Conflicts(Pawn pawn)
+        {
+            List<TraitDef> conflicts = new List<TraitDef>();
+
+            // A conflicting work type, this is a hard stop
+            if (this.trait.requiredWorkTags != WorkTags.None && pawn.WorkTagIsDisabled(this.trait.requiredWorkTags))
+            {
+                PTEIDebug.DebugLog("PTEIPreceptComp_Standard.Conflicts(): Pawn -" + pawn.Name + "- worktag conflict: " + this.trait.requiredWorkTags.ToString());
+                return true;
+            }
+
+            // The same trait but at a different degree
+            if (pawn.story.traits.HasTrait(this.trait))
+            {
+                Trait trait = pawn.story.traits.GetTrait(this.trait);
+
+                PTEIDebug.DebugLog("PTEIPreceptComp_Standard.Conflicts(): Pawn -" + pawn.Name + "- has trait: " + this.trait.defName + " at degree: " + trait.Degree);
+                conflicts.Add(this.trait);
+            }
+
+            for (int i = 0; i < pawn.story.traits.allTraits.Count; i++)
+            {
+                Trait trait = pawn.story.traits.allTraits[i];
+
+                if (trait.def.ConflictsWith(this.trait))
+                {
+                    // Traits marked for removal do not conflict
+                    if(this.removeTraits.Contains(trait.def))
+                    {
+                        continue;
+                    }
+
+                    PTEIDebug.DebugLog("PTEIPreceptComp_Standard.Conflicts(): Pawn -" + pawn.Name + "- has conflicting trait: " + this.trait.defName + "//" + trait.def.defName + " at degree: " + trait.Degree);
+                    conflicts.Add(trait.def);
+                }
+            }
+
+            if(conflicts.Count > 0)
+            {
+                if(PTEISettings.TraitOverride == false)
+                {
+                    return true;
+                }
+
+                PTEIDebug.DebugLog("PTEIPreceptComp_Standard.Conflicts(): Applying trait removal");
+                // We're overriding traits, so we need to drop any that conflict
+                foreach (TraitDef traitdef in conflicts)
+                {
+                    PTEIDebug.DebugLog("PTEIPreceptComp_Standard.Conflicts(): Pawn -" + pawn.Name + "- removing trait: " + traitdef.defName);
+
+                    Trait trait = pawn.story.traits.GetTrait(traitdef);
+                    if (trait == null)
+                    {
+                        PTEIDebug.DebugLog("PTEIPreceptComp_Standard.Conflicts(): Pawn -" + pawn.Name + "- unable to remove: " + traitdef.defName);
+                        continue;
+                    }
+
+                    pawn.story.traits.RemoveTrait(trait);
+                }
+            }
+
+            return false;
+        }
+
+        private void RemoveTraits(Pawn pawn)
+        {
+            foreach (TraitDef traitdef in this.removeTraits)
+            {
+                Trait trait = pawn.story.traits.GetTrait(traitdef);
+                if (trait != null)
+                {
+                    PTEIDebug.DebugLog("PTEIPreceptComp_Standard.RemoveTraits(): Removing trait: " + traitdef.defName);
+                    pawn.story.traits.RemoveTrait(trait);
+                }
+
+            }
+        }
     }
 }
