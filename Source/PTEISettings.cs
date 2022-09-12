@@ -21,6 +21,7 @@ namespace PTEI
         public static int TraitChanceMale = 100;
         public static int TraitChanceFemale = 100;
         public static bool TraitOverride = false;
+        public static bool TraitFactions = false;
         public static bool DebugLogging = false;
 
         public static HashSet<string> TraitsEnabled;
@@ -42,6 +43,7 @@ namespace PTEI
             Scribe_Values.Look(ref TraitChanceMale, "TraitChanceMale", 100, true);
             Scribe_Values.Look(ref TraitChanceFemale, "TraitChanceFemale", 100, true);
             Scribe_Values.Look(ref TraitOverride, "TraitOverride");
+            Scribe_Values.Look(ref TraitFactions, "TraitFactions");
             Scribe_Values.Look(ref DebugLogging, "DebugLogging");
 
             Scribe_Collections.Look(ref TraitsEnabled, "keys", LookMode.Value);
@@ -60,6 +62,7 @@ namespace PTEI
             options.Label("setting_pte_fchance_label".TranslateSimple());
             TraitChanceFemale = (int)options.Slider(TraitChanceFemale, 0f, 100f);
             options.CheckboxLabeled("setting_pte_override_label".TranslateSimple(), ref TraitOverride);
+            options.CheckboxLabeled("setting_pte_factions_label".TranslateSimple(), ref TraitFactions);
             options.CheckboxLabeled("setting_pte_debug_label".TranslateSimple(), ref DebugLogging);
             options.Gap(Text.LineHeight);
 

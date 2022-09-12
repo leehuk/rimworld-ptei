@@ -8,5 +8,6 @@
 	<setting_pte_override_label>Enable trait overriding</setting_pte_override_label>
 	<setting_pte_override_desc>Disabled (default): Pawns with conflicting traits do not have the new trait applied
 Enabled: Conflicting traits are removed from pawns so the new trait can be applied</setting_pte_override_desc>
+	<setting_pte_factions_label>Enable for non-player factions</setting_pte_factions_label>
 	<setting_pte_debug_label>Enable debug logging</setting_pte_debug_label>
 </LanguageData>
