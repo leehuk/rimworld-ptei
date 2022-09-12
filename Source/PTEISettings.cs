@@ -112,13 +112,15 @@ namespace PTEI
             addTraitsLines = 0;
 
             SortedList<string, TraitWithDegree> traitlist = new SortedList<string, TraitWithDegree>();
-
+            int counter = 1;
             // we need to order by the degree name, which is inside our trait iterable
             foreach (TraitDef trait in DefDatabase<TraitDef>.AllDefsListForReading)
             {
                 foreach (TraitDegreeData degree in trait.degreeDatas)
                 {
-                    traitlist.Add(degree.GetLabelCapFor(Gender.None), new TraitWithDegree(trait, degree));
+                    // The trait label may not be unique
+                    traitlist.Add(degree.GetLabelCapFor(Gender.None) + counter.ToString(), new TraitWithDegree(trait, degree));
+                    counter++;
                 }
             }
 
