@@ -10,10 +10,10 @@ namespace PTEI
 
         public PTEIMod(ModContentPack content) : base(content)
         {
+            this.settings = base.GetSettings<PTEISettings>();
+
             Log.Message("[PTEI]: Initialising Harmony");
             new Harmony(this.Content.PackageIdPlayerFacing).PatchAll();
-
-            this.settings = base.GetSettings<PTEISettings>();
         }
 
         public override void DoSettingsWindowContents(Rect inRect)

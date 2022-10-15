@@ -6,7 +6,6 @@ using RimWorld;
 using Verse;
 using Verse.Sound;
 using UnityEngine;
-using static PTEI.PTEISettingsStatic;
 
 namespace PTEI
 {

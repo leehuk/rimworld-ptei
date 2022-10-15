@@ -3,12 +3,6 @@ using RimWorld;
 using System.Reflection;
 using Verse;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace PTEI
 {
     [HarmonyPatch(typeof(Pawn_IdeoTracker))]
