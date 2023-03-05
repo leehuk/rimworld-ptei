@@ -13,7 +13,7 @@ namespace PTEI
 
         public static void Postfix(Pawn_IdeoTracker __instance, ref Ideo ideo)
         {
-            if (!PTEISettings.TraitFactions && (Faction.OfPlayerSilentFail == null || !Faction.OfPlayer.ideos.IsPrimary(ideo)))
+            if (ideo == null || (!PTEISettings.TraitFactions && (Faction.OfPlayerSilentFail == null || !Faction.OfPlayer.ideos.IsPrimary(ideo))))
             {
                 return;
             }
